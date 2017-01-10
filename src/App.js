@@ -15,7 +15,6 @@ class App extends Component {
   componentDidMount() {
     axios.get('http://localhost:3001/quizzes')
     .then((response, error) => {
-      console.log(response);
       this.setState({
         quizzes: response.data.quizzes
       })
@@ -39,14 +38,20 @@ class App extends Component {
             return (
               <div>
                 <h4>{question.title}</h4>
-                <input type="radio" />
+                <input
+                  type="radio"
+                  name="answer"
+                />
                 <span>{answer.title}</span>
               </div>
             )
           }
           return (
             <div>
-              <input type="radio" />
+              <input
+                type="radio"
+                name="answer"
+              />
               <span>{answer.title}</span>
             </div>
           )
