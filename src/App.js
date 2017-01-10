@@ -33,9 +33,19 @@ class App extends Component {
     const questions = quizzes.map(quiz => {
        return quiz.questions.map((question, index) => {
         return question.answers.map((answer, index) => {
+          if(question.answers.indexOf(answer) === 0) {
+            return (
+              <div>
+                <h4>{question.title}</h4>
+                <input type="radio" />
+                <span>{answer.title}</span>
+              </div>
+            )
+          }
           return (
             <div>
-              <li>{answer.title}</li>
+              <input type="radio" />
+              <span>{answer.title}</span>
             </div>
           )
         })
@@ -46,6 +56,7 @@ class App extends Component {
       <div className="app">
         {title}
         {questions}
+        <button>Submit</button>
       </div>
     )
   }
