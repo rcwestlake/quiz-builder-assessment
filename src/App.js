@@ -26,7 +26,9 @@ class App extends Component {
     const { quizzes } = this.state
     const title = quizzes.map((q, index) => {
       return (
-        <h4 key={index}>{q.title}</h4>
+        <h1
+          key={index}
+          className="title">{q.title}</h1>
       )
     })
 
@@ -55,8 +57,12 @@ class App extends Component {
     return (
       <div className="app">
         {title}
-        {questions}
-        <button>Submit</button>
+        <section className="quiz">
+          {questions}
+          <section className="btn-container">
+            <button>Submit</button>
+          </section>
+        </section>
       </div>
     )
   }
