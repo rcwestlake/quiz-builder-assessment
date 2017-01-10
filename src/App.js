@@ -7,7 +7,7 @@ class App extends Component {
     super()
 
     this.state = {
-      questions: '',
+      quizzes: [],
       score: null,
     }
   }
@@ -16,15 +16,38 @@ class App extends Component {
     axios.get('http://localhost:3001/quizzes')
     .then((response, error) => {
       console.log(response);
-    })
+      this.setState({
+        quizzes: response.data.quizzes
+      })
+    }).catch(error => console.error('error with api call', error))
   }
 
   render() {
+    const { quizzes } = this.state
+    const title = quizzes.map((q, index) => {
+      return (
+        <h4 key={index}>{q.title}</h4>
+      )
+    })
+
+    const questions = quizzes.map(quiz => {
+       return quiz.questions.map((question, index) => {
+        return question.answers.map((answer, index) => {
+          return (
+            <div>
+              <li>{answer.title}</li>
+            </div>
+          )
+        })
+      })
+    })
+
     return (
       <div className="app">
-        <h1>Javascript Quiz</h1>
+        {title}
+        {questions}
       </div>
-    );
+    )
   }
 }
 
