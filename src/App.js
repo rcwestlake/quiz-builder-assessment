@@ -8,7 +8,8 @@ class App extends Component {
 
     this.state = {
       quizzes: [],
-      score: null,
+      score: {},
+      feedback: '',
     }
   }
 
@@ -18,11 +19,31 @@ class App extends Component {
       this.setState({
         quizzes: response.data.quizzes
       })
+      return response
+    })
+    .then((response, error) => {
+      const obj = this.state.score;
+      response.data.quizzes[0].questions.map(function(question,index) {
+        obj[question.id] = 0
+      })
+      this.setState({score: obj})
     }).catch(error => console.error('error with api call', error))
   }
 
+  handleClick(id, score) {
+    this.state.score[id] = score
+    this.setState({
+      score: this.state.score
+    })
+  }
+
+  submit(score) {
+    axios.post('http://localhost:3001/scores', {score: score})
+    .then(response => this.setState({feedback: response.data.score}))
+  }
+
   render() {
-    const { quizzes } = this.state
+    const { quizzes, score, feedback } = this.state
     const title = quizzes.map((q, index) => {
       return (
         <h1
@@ -40,7 +61,8 @@ class App extends Component {
                 <h4>{question.title}</h4>
                 <input
                   type="radio"
-                  name="answer"
+                  name={question.id}
+                  onClick={() => this.handleClick(question.id, answer.score)}
                 />
                 <span>{answer.title}</span>
               </div>
@@ -50,7 +72,8 @@ class App extends Component {
             <div>
               <input
                 type="radio"
-                name="answer"
+                name={question.id}
+                onClick={() => this.handleClick(question.id, answer.score)}
               />
               <span>{answer.title}</span>
             </div>
@@ -59,14 +82,21 @@ class App extends Component {
       })
     })
 
+    const totalScore = Object.keys(score).reduce((acc, item) => {
+      return acc + score[item]
+    }, 0)
+
     return (
       <div className="app">
         {title}
         <section className="quiz">
           {questions}
           <section className="btn-container">
-            <button>Submit</button>
+            <button
+              onClick={() => this.submit(totalScore)}>Submit</button>
           </section>
+          {totalScore}
+          {feedback}
         </section>
       </div>
     )
