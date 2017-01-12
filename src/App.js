@@ -24,9 +24,11 @@ class App extends Component {
     .then((response, error) => {
       const obj = this.state.score;
       response.data.quizzes[0].questions.map(function(question,index) {
-        obj[question.id] = 0
+        return obj[question.id] = 0
       })
-      this.setState({score: obj})
+      this.setState({
+        score: obj
+      })
     }).catch(error => console.error('error with api call', error))
   }
 
@@ -95,8 +97,10 @@ class App extends Component {
             <button
               onClick={() => this.submit(totalScore)}>Submit</button>
           </section>
-          {totalScore}
-          {feedback}
+          <h6>SCORE:</h6>
+          <p>{totalScore}</p>
+          {feedback ? <h6>FEEDBACK BASEED ON SCORE:</h6> : ''}
+          <p>{feedback}</p>
         </section>
       </div>
     )
