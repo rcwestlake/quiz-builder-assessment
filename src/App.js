@@ -89,7 +89,7 @@ class App extends Component {
             <p className="score">
               {totalScore}
             </p>
-            {feedback ? <h6>FEEDBACK BASEED ON SCORE:</h6> : ''}
+            {feedback ? <h6>FEEDBACK BASED ON SCORE:</h6> : ''}
             <p>{feedback}</p>
           </section>
         </section>
