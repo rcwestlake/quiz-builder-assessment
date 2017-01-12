@@ -1,19 +1,24 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee+Shade');
+
 .app {
   text-align: left;
   width: 100%;
 }
 
 .title {
-  text-align: center;
+  color: #09A8FA;
+  font-family: 'Bungee Shade', cursive;
   font-size: 40px;
-}
-
-h1 {
-  color: #D53939;
+  text-align: center;
 }
 
 h4 {
   color: #616EEF;
+}
+
+h6 {
+  font-size: 15px;
+  margin: 20px 0px;
 }
 
 input {
@@ -27,14 +32,19 @@ span {
 
 .quiz {
   margin: auto;
-  margin-left: 25%;
+  text-align: left;
+  width: 50%;
+}
+
+.answer {
+  text-align: left;
 }
 
 .btn-container {
   width: 100%;
 }
 
-button {
+.submit-button {
   cursor: pointer;
   color: white;
   background-color: #616EEF;
@@ -42,4 +52,16 @@ button {
   margin: 30px 0px;
   height: 50px;
   width: 100px;
+}
+
+.submit-button:hover {
+  background-color: white;
+  border: 2px solid #616EEF;
+  color: #616EEF;
+}
+
+.score {
+  color: #616EEF;
+  font-size: 25px;
+  margin: 0px;
 }
