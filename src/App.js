@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import './App.css'
 import Title from './Components/Title.js'
+import Question from './Components/Question.js'
 
 class App extends Component {
   constructor() {
@@ -40,7 +41,7 @@ class App extends Component {
     })
   }
 
-  submit(score) {
+  submitQuiz(score) {
     axios.post('http://localhost:3001/scores', {score: score})
     .then(response => this.setState({feedback: response.data.score}))
   }
@@ -55,32 +56,13 @@ class App extends Component {
     })
 
     const questions = quizzes.map(quiz => {
-       return quiz.questions.map((question, index) => {
-        return question.answers.map((answer, index) => {
-          if(question.answers.indexOf(answer) === 0) {
-            return (
-              <div>
-                <h4>{question.title}</h4>
-                <input
-                  type="radio"
-                  name={question.id}
-                  onClick={() => this.handleClick(question.id, answer.score)}
-                />
-                <span>{answer.title}</span>
-              </div>
-            )
-          }
-          return (
-            <div>
-              <input
-                type="radio"
-                name={question.id}
-                onClick={() => this.handleClick(question.id, answer.score)}
-              />
-              <span>{answer.title}</span>
-            </div>
-          )
-        })
+      return quiz.questions.map((question, index) => {
+        return <Question
+                 k={index}
+                 title={question.title}
+                 id={question.id}
+                 answers={question.answers}
+               />
       })
     })
 
@@ -95,7 +77,7 @@ class App extends Component {
           {questions}
           <section className="btn-container">
             <button
-              onClick={() => this.submit(totalScore)}>Submit</button>
+              onClick={() => this.submitQuiz(totalScore)}>Submit</button>
           </section>
           <h6>SCORE:</h6>
           <p>{totalScore}</p>
