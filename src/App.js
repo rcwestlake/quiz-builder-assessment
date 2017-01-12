@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import axios from 'axios'
-import './App.css';
+import './App.css'
+import Title from './Components/Title.js'
+import Question from './Components/Question.js'
 
 class App extends Component {
   constructor() {
@@ -24,9 +26,11 @@ class App extends Component {
     .then((response, error) => {
       const obj = this.state.score;
       response.data.quizzes[0].questions.map(function(question,index) {
-        obj[question.id] = 0
+        return obj[question.id] = 0
       })
-      this.setState({score: obj})
+      this.setState({
+        score: obj
+      })
     }).catch(error => console.error('error with api call', error))
   }
 
@@ -37,48 +41,29 @@ class App extends Component {
     })
   }
 
-  submit(score) {
-    axios.post('http://localhost:3001/scores', {score: score})
+  submitQuiz(score) {
+    axios.post('http://localhost:3001/scores', { score })
     .then(response => this.setState({feedback: response.data.score}))
   }
 
   render() {
     const { quizzes, score, feedback } = this.state
     const title = quizzes.map((q, index) => {
-      return (
-        <h1
-          key={index}
-          className="title">{q.title}</h1>
-      )
+      return <Title
+              k={index}
+              title={q.title}
+            />
     })
 
     const questions = quizzes.map(quiz => {
-       return quiz.questions.map((question, index) => {
-        return question.answers.map((answer, index) => {
-          if(question.answers.indexOf(answer) === 0) {
-            return (
-              <div>
-                <h4>{question.title}</h4>
-                <input
-                  type="radio"
-                  name={question.id}
-                  onClick={() => this.handleClick(question.id, answer.score)}
-                />
-                <span>{answer.title}</span>
-              </div>
-            )
-          }
-          return (
-            <div>
-              <input
-                type="radio"
-                name={question.id}
-                onClick={() => this.handleClick(question.id, answer.score)}
-              />
-              <span>{answer.title}</span>
-            </div>
-          )
-        })
+      return quiz.questions.map((question, index) => {
+        return <Question
+                 k={index}
+                 title={question.title}
+                 id={question.id}
+                 answers={question.answers}
+                 handleClick={(id, score) => this.handleClick(id, score)}
+               />
       })
     })
 
@@ -93,10 +78,12 @@ class App extends Component {
           {questions}
           <section className="btn-container">
             <button
-              onClick={() => this.submit(totalScore)}>Submit</button>
+              onClick={() => this.submitQuiz(totalScore)}>Submit</button>
           </section>
-          {totalScore}
-          {feedback}
+          <h6>SCORE:</h6>
+          <p>{totalScore}</p>
+          {feedback ? <h6>FEEDBACK BASEED ON SCORE:</h6> : ''}
+          <p>{feedback}</p>
         </section>
       </div>
     )
