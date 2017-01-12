@@ -35,6 +35,7 @@ class App extends Component {
   }
 
   handleClick(id, score) {
+    console.log('in handleClick');
     this.state.score[id] = score
     this.setState({
       score: this.state.score
@@ -62,6 +63,7 @@ class App extends Component {
                  title={question.title}
                  id={question.id}
                  answers={question.answers}
+                 handleClick={(id, score) => this.handleClick(id, score)}
                />
       })
     })
