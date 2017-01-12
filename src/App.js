@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import axios from 'axios'
-import './App.css';
+import './App.css'
+import Title from './Components/Title.js'
 
 class App extends Component {
   constructor() {
@@ -47,11 +48,10 @@ class App extends Component {
   render() {
     const { quizzes, score, feedback } = this.state
     const title = quizzes.map((q, index) => {
-      return (
-        <h1
-          key={index}
-          className="title">{q.title}</h1>
-      )
+      return <Title
+              k={index}
+              title={q.title}
+            />
     })
 
     const questions = quizzes.map(quiz => {
