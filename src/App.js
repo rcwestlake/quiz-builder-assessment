@@ -78,12 +78,20 @@ class App extends Component {
           {questions}
           <section className="btn-container">
             <button
-              onClick={() => this.submitQuiz(totalScore)}>Submit</button>
+              onClick={() => this.submitQuiz(totalScore)}
+              className="submit-button"
+            >
+              Submit
+            </button>
           </section>
-          <h6>SCORE:</h6>
-          <p>{totalScore}</p>
-          {feedback ? <h6>FEEDBACK BASEED ON SCORE:</h6> : ''}
-          <p>{feedback}</p>
+          <section className="feedback-container">
+            <h6>SCORE:</h6>
+            <p className="score">
+              {totalScore}
+            </p>
+            {feedback ? <h6>FEEDBACK BASEED ON SCORE:</h6> : ''}
+            <p>{feedback}</p>
+          </section>
         </section>
       </div>
     )
