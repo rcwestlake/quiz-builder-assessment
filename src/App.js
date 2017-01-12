@@ -35,7 +35,6 @@ class App extends Component {
   }
 
   handleClick(id, score) {
-    console.log('in handleClick');
     this.state.score[id] = score
     this.setState({
       score: this.state.score
@@ -43,7 +42,7 @@ class App extends Component {
   }
 
   submitQuiz(score) {
-    axios.post('http://localhost:3001/scores', {score: score})
+    axios.post('http://localhost:3001/scores', { score })
     .then(response => this.setState({feedback: response.data.score}))
   }
 

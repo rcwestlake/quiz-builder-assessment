@@ -10,6 +10,7 @@ const Title = ({ title, k }) => {
 
 Title.propTypes = {
   title: PropTypes.string,
+  k: PropTypes.number
 }
 
 export default Title;
